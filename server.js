@@ -24,7 +24,7 @@ if (process.env.NODE_ENV === "production") {
     origin: appConfigs.origin,
     credentials: true,
   };
-  const sequilize = new Sequelize(
+  sequelize = new Sequelize(
     "eg1j1ajilkczimm",
     "bejeqxmew6pyizdi",
     "phzrauccqh9sip7x",
