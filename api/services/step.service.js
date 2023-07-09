@@ -1,6 +1,6 @@
 const libraryShema = require("../schemas/library.shema");
 const { QueryTypes } = require("sequelize");
-const db = require("../configs")("db");
+const db = require("../configs/db.configs");
 
 const stepByIdLibrary = async (req, res) => {
   const fetchOne = await db.query(

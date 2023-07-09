@@ -3,7 +3,7 @@ const cors = require("cors");
 const { Sequelize, QueryTypes } = require("sequelize");
 const mysql = require("mysql");
 const dotenv = require("dotenv");
-const appConfigs = require("./api/configs")("app");
+const appConfigs = require("./api/configs/app.configs");
 
 const app = express();
 
@@ -16,12 +16,22 @@ const stepRoutes = require("./api/routers/step.router");
 const libraryCategoryRoutes = require("./api/routers/libraryCategory.router");
 // const ComposerRoutes = require('./api/routers/composer.router')
 // const accordRoutes = require('./api/routers/accord.router')
-
+console.log(appConfigs);
 let corsOption;
 let sequelize;
-if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV === "development") {
   corsOption = {
-    origin: appConfigs.origin,
+    origin: appConfigs.configDev.origin,
+    credentials: true,
+  };
+  sequelize = new Sequelize("Nerviidevelopperhelper", "root", "root", {
+    host: "localhost",
+    dialect: "mysql",
+    logging: false,
+  });
+} else {
+  corsOption = {
+    origin: appConfigs.configProd.origin,
     credentials: true,
   };
   sequelize = new Sequelize(
@@ -34,16 +44,6 @@ if (process.env.NODE_ENV === "production") {
       logging: true,
     }
   );
-} else {
-  corsOption = {
-    origin: appConfigs.origin,
-    credentials: true,
-  };
-  sequelize = new Sequelize("Nerviidevelopperhelper", "root", "root", {
-    host: "localhost",
-    dialect: "mysql",
-    logging: false,
-  });
 }
 
 app.use(cors(corsOption));
