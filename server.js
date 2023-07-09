@@ -29,11 +29,11 @@ if (process.env.NODE_ENV === "production") {
 }
 if (process.env.NODE_ENV === "production") {
   sequelize = new Sequelize(
-    "eg1j1ajilkczimm",
-    "bejeqxmew6pyizdi",
-    "phzrauccqh9sip7x",
+    "h4ez118hl5fn2zs2",
+    "a6v7o484r0pzbrcq",
+    "ljuewexkl0e1f27n",
     {
-      host: "eporqep6b4b8ql12.chr7pe7iynqr.eu-west-1.rds.amazonaws.com",
+      host: "clwxydcjair55xn0.chr7pe7iynqr.eu-west-1.rds.amazonaws.com",
       dialect: "mysql",
       logging: true,
     }
