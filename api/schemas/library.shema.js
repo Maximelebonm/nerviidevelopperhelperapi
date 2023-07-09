@@ -1,6 +1,6 @@
 const mysql = require("mysql");
 const { Sequelize, DataTypes, Op, Model } = require("sequelize");
-const db = require("../configs/development/db.configs");
+const db = require("../configs/db.configs");
 const libraryCategorySchema = require("./libraryCategory.shema");
 
 const librarySchema = db.define(

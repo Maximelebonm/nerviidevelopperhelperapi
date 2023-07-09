@@ -1,8 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const { Sequelize, QueryTypes } = require("sequelize");
-const mysql = require("mysql");
-const dotenv = require("dotenv");
+const mysql = require("mysql2");
 const appConfigs = require("./api/configs/app.configs");
 
 const app = express();
@@ -10,30 +9,25 @@ const app = express();
 const libraryCategorySchema = require("./api/schemas/libraryCategory.shema");
 const library = require("./api/schemas/library.shema");
 const stepSchema = require("./api/schemas/step.shema");
-// const UserRoutes = require('./api/routers/user.router')
+
 const libraryRoutes = require("./api/routers/library.router");
 const stepRoutes = require("./api/routers/step.router");
 const libraryCategoryRoutes = require("./api/routers/libraryCategory.router");
-// const ComposerRoutes = require('./api/routers/composer.router')
-// const accordRoutes = require('./api/routers/accord.router')
-console.log(appConfigs);
+
 let corsOption;
 let sequelize;
-if (process.env.NODE_ENV === "development") {
-  corsOption = {
-    origin: appConfigs.configDev.origin,
-    credentials: true,
-  };
-  sequelize = new Sequelize("Nerviidevelopperhelper", "root", "root", {
-    host: "localhost",
-    dialect: "mysql",
-    logging: false,
-  });
-} else {
+if (process.env.NODE_ENV === "production") {
   corsOption = {
     origin: appConfigs.configProd.origin,
     credentials: true,
   };
+} else {
+  corsOption = {
+    origin: appConfigs.configDev.origin,
+    credentials: true,
+  };
+}
+if (process.env.NODE_ENV === "production") {
   sequelize = new Sequelize(
     "eg1j1ajilkczimm",
     "bejeqxmew6pyizdi",
@@ -44,18 +38,16 @@ if (process.env.NODE_ENV === "development") {
       logging: true,
     }
   );
+} else {
+  sequelize = new Sequelize("nerviidevelopperhelper", "root", "root", {
+    host: "localhost",
+    dialect: "mysql",
+    logging: false,
+  });
 }
 
+console.log(sequelize);
 app.use(cors(corsOption));
-
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log("Connection has been established successfully.");
-  })
-  .catch((error) => {
-    console.error("Unable to connect to the database: ", error);
-  });
 
 const port = process.env.PORT || 5000;
 
@@ -65,10 +57,14 @@ app.use(express.urlencoded({ extended: true }));
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 
+app.get("/", (req, res) => {
+  res.json("hello, heroku !");
+});
+
 app.use("/library", libraryRoutes);
 app.use("/step", stepRoutes);
 app.use("/libraryCategory", libraryCategoryRoutes);
 
-app.listen(process.env.PORT, () => {
-  console.log("serveur started on : ", process.env.PORT);
+app.listen(port, () => {
+  console.log("serveur started on : ", port);
 });

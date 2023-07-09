@@ -13,7 +13,7 @@ if (process.env.NODE_ENV === "production") {
     }
   );
 } else {
-  db = new Sequelize("Nerviidevelopperhelper", "root", "root", {
+  db = new Sequelize("nerviidevelopperhelper", "root", "root", {
     host: "Localhost",
     dialect: "mysql",
   });
