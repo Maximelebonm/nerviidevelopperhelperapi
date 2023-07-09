@@ -5,7 +5,7 @@ const configDev = {
 };
 
 const configProd = {
-  origin: "https://nerviidevelopperhelper.web.app/",
+  origin: "https://nerviidevelopperhelper.web.app",
   credentials: true,
 };
 
