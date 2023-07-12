@@ -4,7 +4,7 @@ const db = require("../configs/db.configs");
 
 const getAll = async (req, res) => {
   const fetchAllCategory = await db.query(
-    `SELECT * FROM librarycategory order by ordrelist`,
+    `SELECT * FROM librarycategory ORDER BY displayorder`,
     {
       type: QueryTypes.SELECT,
     }
